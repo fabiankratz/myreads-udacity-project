@@ -1,3 +1,10 @@
+Welcome to "MyReads"! This is a web application that helps you track your current reading list.
+
+The project uses React and Material-UI for Design and a small backend Books API.
+
+On top of the [project requirements](https://review.udacity.com/#!/rubrics/918/view), i added the following features:
+- Alert whenever a book has been moved to another shelf
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
