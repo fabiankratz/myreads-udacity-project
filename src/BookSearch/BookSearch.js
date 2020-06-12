@@ -19,6 +19,7 @@ export default class BookSearch extends Component {
   }
   static propTypes = {
     myBooks: PropTypes.array.isRequired,
+    filter: PropTypes.object.isRequired,
     onUpdateBook: PropTypes.func.isRequired,
   };
   updateQuery(query) {
@@ -59,6 +60,7 @@ export default class BookSearch extends Component {
     prevProps.myBooks !== this.props.myBooks && this.setBooks();
   }
   render() {
+    const {filter, onUpdateBook} = this.props
     return (
       <div className="book-search">
         <BookSearchForm
@@ -66,25 +68,26 @@ export default class BookSearch extends Component {
           query={this.state.query}
         />
         <FilteredBookListCollection
-          filters={[
+          namedFilters={[
             {
               title: { text: "All", icon: <LibraryBooksTwoToneIcon /> },
-              options: { shelf: undefined }, // Return all books that are not in any of my shelves
+              options: {shelf: (book) => !book.shelf}, // Return all books that are not in any of my shelves
             },
             {
               title: { text: "Want to read", icon: <StarsIcon /> },
-              options: { shelf: "wantToRead" },
+              options: {shelf: (book) => book.shelf === "wantToRead"},
             },
             {
               title: { text: "Currently reading", icon: <BookTwoToneIcon /> },
-              options: { shelf: "currentlyReading" },
+              options: {shelf: (book) => book.shelf === "currentlyReading"},
             },
             {
               title: { text: "Read", icon: <DoneAllIcon /> },
-              options: { shelf: "read" },
+              options: {shelf: (book) => book.shelf === "read"},
             },
           ]}
-          onUpdateBook={this.props.onUpdateBook}
+          filter={filter}
+          onUpdateBook={onUpdateBook}
           books={this.state.books}
         />
       </div>

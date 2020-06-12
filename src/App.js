@@ -13,6 +13,9 @@ export default class App extends Component {
     this.state = {
       books: [],
       pendingBookUpdates: [], // Perform these updates on componentDidUpdate
+      filter: {
+        options: {}
+      },
     }
     this.updateBook = this.updateBook.bind(this)
   }
@@ -57,16 +60,16 @@ export default class App extends Component {
     } 
   }
   render() {
-    const { books } = this.state
+    const { books, filter } = this.state
     return (
       <div className="app">
         <BrowserRouter>
           <Alerts books={ books } /> {/* Alerts are shown when books have been successfully moved */}
           <Route exact path="/search">
-            <BookSearch myBooks={ books } onUpdateBook={ this.updateBook }/>
+            <BookSearch myBooks={ books } filter={ filter } onUpdateBook={ this.updateBook }/>
           </Route>
           <Route exact path="/">
-            <BookShelf books={ books } onUpdateBook={ this.updateBook }/>
+            <BookShelf books={ books } filter={ filter } onUpdateBook={ this.updateBook }/>
           </Route>
           <Navigator /> {/* Link to jump from home screen to search and back*/}
         </BrowserRouter>

@@ -24,7 +24,7 @@ function TabPanel(props) {
 }
 
 export default function FilteredBookListCollection(props) {
-  const { filters, books, onUpdateBook } = props;
+  const { namedFilters, filter, books, onUpdateBook } = props;
   const a11yProps = (index) => ({
     id: `FilteredBookList-tab-${index}`,
     "aria-controls": `FilteredBookList-tabpanel-${index}`,
@@ -42,23 +42,24 @@ export default function FilteredBookListCollection(props) {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          {filters.map((filter, index) => (
+          {namedFilters.map((namedFilter, index) => (
             <Tab
-              key={filter.title.text}
-              label={filter.title.text}
-              icon={filter.title.icon}
+              key={namedFilter.title.text}
+              label={namedFilter.title.text}
+              icon={namedFilter.title.icon}
               {...a11yProps(index)}
             />
           ))}
         </Tabs>
       </AppBar>
-      {filters.map((filter, index) => (
-        <TabPanel key={filter.title.text} value={value} index={index}>
+      {namedFilters.map((namedFilter, index) => (
+        <TabPanel key={namedFilter.title.text} value={value} index={index}>
           <FilteredBookList
-            key={filter.title.text}
+            key={namedFilter.title.text}
             books={books}
-            filter={filter}
+            namedFilter={namedFilter}
             onUpdateBook={onUpdateBook}
+            filter={ filter }
           />
         </TabPanel>
       ))}
@@ -68,6 +69,7 @@ export default function FilteredBookListCollection(props) {
 
 FilteredBookListCollection.propTypes = {
   books: PropTypes.array.isRequired,
-  filters: PropTypes.array.isRequired,
+  filter: PropTypes.object.isRequired,
+  namedFilters: PropTypes.array.isRequired,
   onUpdateBook: PropTypes.func.isRequired,
 };

@@ -66,6 +66,7 @@ export default function Book(props) {
               component="p"
               className={classes.content}
             >
+              {book.pageCount && `Pages: ${book.pageCount}`}<br/>
               {book.authors && `Author(s): ${book.authors.join(", ")}`}
             </Typography>
           </CardContent>

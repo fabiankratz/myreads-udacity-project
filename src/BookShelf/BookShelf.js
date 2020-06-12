@@ -6,24 +6,25 @@ import DoneAllIcon from "@material-ui/icons/DoneAll";
 import StarsIcon from "@material-ui/icons/Stars";
 
 export default function BookShelf(props) {
-  const { books, onUpdateBook } = props;
+  const { books, filter, onUpdateBook } = props;
   return (
     <div className="book-shelf">
       <FilteredBookListCollection
-        filters={[
+        namedFilters={ [
           {
             title: { text: "Want to read", icon: <StarsIcon /> }, // For visual representation of filter
-            options: { shelf: "wantToRead" }, // This is used to find only the books with the shelf "wantToRead"
+            options: {shelf: (book) => book.shelf === "wantToRead"}, // This is used to find only the books with the shelf "wantToRead"
           },
           {
             title: { text: "Currently reading", icon: <BookTwoToneIcon /> },
-            options: { shelf: "currentlyReading" },
+            options: {shelf: (book) => book.shelf === "currentlyReading"},
           },
           {
             title: { text: "Read", icon: <DoneAllIcon /> },
-            options: { shelf: "read" },
+            options: {shelf: (book) => book.shelf === "read"},
           },
-        ]}
+        ] }
+        filter={ filter }
         onUpdateBook={onUpdateBook}
         books={books}
       />
@@ -34,4 +35,5 @@ export default function BookShelf(props) {
 BookShelf.propTypes = {
   books: PropTypes.array.isRequired,
   onUpdateBook: PropTypes.func.isRequired,
+  filter: PropTypes.object.isRequired
 };
